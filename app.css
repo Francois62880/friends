@@ -1,0 +1,42 @@
+.container
+{
+    width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    font-family: Arial;
+}
+h1
+{
+    margin:50px;
+}
+h2
+{
+    margin: 100px;
+}
+a
+{
+    text-decoration: none;
+}
+form input, form button
+{
+    width: 400px;
+    height: 60px;
+    display: block;
+    font-size: 20px;
+    margin: 20px auto;
+    padding: 10px;
+}
+form button
+{
+    width: 420px;
+    height: 80px;
+    background-color: #fff;
+    border: 1px solid grey;
+    cursor:pointer;
+    transition: 0.3s;
+}
+form button:hover
+{
+    background-color: grey;
+    color:#fff
+}
