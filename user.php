@@ -1,3 +1,13 @@
+<?php
+    session_start();
+    require 'db.php';
+    $query = $pdo->prepare("SELECT * FROM friends WHERE username_1 = :username_1 OR username_2 = :username_2");
+    $query->execute([
+        "username_1" => $_SESSION['user'],
+        "username_2" => $_SESSION['user']
+    ]);
+    $data = $query->fetchall();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,7 +36,41 @@
     <div class="container">
         <div class="row">
             <div class="offset-lg-2 col-lg-8">
-               <h1>Vous devez vous connecter</h1>
+               <h1>Bienvenu <?= $_SESSION['user'] ?></h1>
+
+               <h2>Liste d'amis:</h2>
+               <?php
+                for($i=0; $i<sizeof($data); $i++)
+                {
+                    if($data[$i]['username_1'] == $_SESSION['user'])
+                    {
+                        echo $data[$i]['username_2'];
+
+                        if($data[$i]['is_pending'] == true)
+                        echo "(en attente d'être accepté)";
+                    }else{
+                        if($data[$i]['is_pending'] == false){
+                        echo $data[$i]['username_1'];
+                    }
+                    }
+                    echo '</br>';
+                }
+               ?>
+
+               <h2>Demande d'amis:</h2>
+               <?php
+                for($i=0; $i<sizeof($data); $i++)
+                {
+                    if($data[$i]['is_pending'] == true && $data[$i]['username_2'] == $_SESSION['user'])
+                    {
+                        echo $data[$i]['username_1']. "<a href='#' class='btn btn-primary'>Accepté</a>";
+                    }
+                }
+
+                ?>
+
+
+               <h2>Autres utilisateurs:</h2>
              
             </div>
         </div>
