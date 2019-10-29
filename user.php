@@ -7,6 +7,11 @@
         "username_2" => $_SESSION['user']
     ]);
     $data = $query->fetchall();
+
+    if($_SESSION['user'])
+    {
+        $user_check[] = $_SESSION['user'];
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,13 +49,15 @@
                 {
                     if($data[$i]['username_1'] == $_SESSION['user'])
                     {
-                        echo $data[$i]['username_2'];
+                        echo $data[$i]['username_2'] . "<a href='#' class='btn btn-primary'>Supprimez un ami</a></br>";
+                        $user_check[] = $data[$i]['username_2'];
 
                         if($data[$i]['is_pending'] == true)
                         echo "(en attente d'être accepté)";
                     }else{
                         if($data[$i]['is_pending'] == false){
-                        echo $data[$i]['username_1'];
+                        echo $data[$i]['username_1'] . "<a href='#' class='btn btn-primary'>Supprimez un ami</a></br>";
+                        $user_check[] = $data[$i]['username_1'];
                     }
                     }
                     echo '</br>';
@@ -63,7 +70,8 @@
                 {
                     if($data[$i]['is_pending'] == true && $data[$i]['username_2'] == $_SESSION['user'])
                     {
-                        echo $data[$i]['username_1']. "<a href='#' class='btn btn-primary'>Accepté</a>";
+                        echo $data[$i]['username_1']. "<a href='#' class='btn btn-primary'>Accepté</a></br>";
+                        $user_check[] = $data[$i]['username_1'];
                     }
                 }
 
@@ -71,6 +79,17 @@
 
 
                <h2>Autres utilisateurs:</h2>
+               <?php
+                $query = $pdo->query("SELECT * FROM users");
+                $data = $query->fetchall();
+                for($i=0; $i<sizeof($data); $i++)
+                {
+                    if(!in_array($data[$i]['username'], $user_check))
+                    {
+                        echo $data[$i]['username']. "<a href='#' class='btn btn-primary'>Invitez un ami</a> </br>";
+                    }
+                }
+                ?>
              
             </div>
         </div>
