@@ -49,14 +49,14 @@
                 {
                     if($data[$i]['username_1'] == $_SESSION['user'])
                     {
-                        echo $data[$i]['username_2'] . "<a href='#' class='btn btn-primary'>Supprimez un ami</a></br>";
+                        echo $data[$i]['username_2'] . "<a href='action.php?action=delete&id=".$data[$i]['id']."' class='btn btn-primary'>Supprimez un ami</a></br>";
                         $user_check[] = $data[$i]['username_2'];
 
                         if($data[$i]['is_pending'] == true)
                         echo "(en attente d'être accepté)";
                     }else{
                         if($data[$i]['is_pending'] == false){
-                        echo $data[$i]['username_1'] . "<a href='#' class='btn btn-primary'>Supprimez un ami</a></br>";
+                        echo $data[$i]['username_1'] . "<a href='action.php?action=delete&id=".$data[$i]['id']."' class='btn btn-primary'>Supprimez un ami</a></br>";
                         $user_check[] = $data[$i]['username_1'];
                     }
                     }
@@ -70,7 +70,7 @@
                 {
                     if($data[$i]['is_pending'] == true && $data[$i]['username_2'] == $_SESSION['user'])
                     {
-                        echo $data[$i]['username_1']. "<a href='#' class='btn btn-primary'>Accepté</a></br>";
+                        echo $data[$i]['username_1']. "<a href='action.php?action=accept&id=".$data[$i]['id'] . "' class='btn btn-primary'>Accepté</a>" . "<a href='action.php?action=delete&id=".$data[$i]['id']."' class='btn btn-primary'>Refusez</a></br>";
                         $user_check[] = $data[$i]['username_1'];
                     }
                 }
@@ -86,7 +86,7 @@
                 {
                     if(!in_array($data[$i]['username'], $user_check))
                     {
-                        echo $data[$i]['username']. "<a href='#' class='btn btn-primary'>Invitez un ami</a> </br>";
+                        echo $data[$i]['username']. "<a href='action.php?action=add&username=".$data[$i]['username'] . "' class='btn btn-primary'>Invitez un ami</a> </br>";
                     }
                 }
                 ?>
