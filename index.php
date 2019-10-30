@@ -2,14 +2,22 @@
 $error= null;
 if(!empty($_POST['username']) && !empty($_POST['password']))
 {
-    if($_POST['username'] === 'root' && $_POST['password' === 'root'])
+    if($_POST['username'] === 'root' && $_POST['password'] === 'root')
     {
-
+        session_start();
+        $_SESSION['connecte'] = 1;
+        header('location: user.php');
+        exit();
     }else{
         $error = "Identifiant incorrects";
     }
 }
-    require 'elements/header.php';
+    require_once 'fonctions/auth.php';
+    if(est_connecte()){
+        header('location: /user.php');
+        exit();
+    }
+    require_once 'elements/header.php';
 ?>
 <div class="container">
     <div class="row">
@@ -37,5 +45,5 @@ if(!empty($_POST['username']) && !empty($_POST['password']))
 </html>
 
 <?php
-    require 'elements/footer.php';
+    require_once 'elements/footer.php';
 ?>
