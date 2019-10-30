@@ -20,6 +20,6 @@ if($_GET['action']== "add")
 }
 if($_GET['action']== "accept")
 {
-    $pdo->query("UPDATE friends set is_pending = 0 WHERE id =" .$_GET['id']);
+    $pdo->query("UPDATE friends SET is_pending = 0 WHERE id =" .$_GET['id']);
     header("location: user.php");
 }
