@@ -1,5 +1,6 @@
 <?php
-    session_start();
+    require 'fonctions/auth.php';
+    forcer_utilisateur_connecte();
     require 'db.php';
     $query = $pdo->prepare("SELECT * FROM friends WHERE username_1 = :username_1 OR username_2 = :username_2");
     $query->execute([
@@ -42,7 +43,7 @@
         <div class="row">
             <div class="offset-lg-2 col-lg-8">
                 <h1>Bienvenu <?= $_SESSION['user'] ?></h1>
-                <button class="btn btn-success">Se connecter</button>
+                <button class="btn btn-success">Se déconnecter</button>
                 <h2>Liste d'amis:</h2>
                 <?php
                 for($i=0; $i<sizeof($data); $i++)
@@ -73,7 +74,7 @@
                     }
                 }
                ?>
-                  </table>
+                </table>
 
                 <h2>Demande d'amis:</h2>
                 <table class="table">
@@ -83,7 +84,7 @@
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
-                <?php
+                    <?php
                 for($i=0; $i<sizeof($data); $i++)
                 {
                     if($data[$i]['is_pending'] == true && $data[$i]['username_2'] == $_SESSION['user'])
@@ -96,7 +97,7 @@
                 }
 
                 ?>
-                   </table>
+                </table>
 
 
                 <h2>Autres utilisateurs:</h2>
